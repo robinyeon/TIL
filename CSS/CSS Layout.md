@@ -43,15 +43,15 @@
 
 ### justify-content
 - **justify-content를 사용하면 'main axis'(wherever it is)에서 아이템을 움직일 수 있다.**
-### align-item
-- **align-item을 사용하면 'cross axis'(wherever it is)에서 아이템을 움직일 수 있다.**
+### align-items
+- **align-items을 사용하면 'cross axis'(wherever it is)에서 아이템을 움직일 수 있다.**
 - 자주 하는 실수: **직속부모에게 height 주는 것을 잊지 말기**
 
 <br/>
 
 ### '자식'의 스타일에 property 먹이는 흔치 않은 경우
 #### 1. align-self
-  - align-item(cross axis)와 같은 역할을 하지만 **오직 한 '자식'** 에게만 먹이는 경우
+  - align-items(cross axis)와 같은 역할을 하지만 **오직 한 '자식'** 에게만 먹이는 경우
   - e.g. `.child:nth-child(2) { align-self: center; };`
 #### 2. order
   - '자식'의 순서를 바꾸고 싶을때
@@ -101,6 +101,13 @@
   - 설정된 width를 유지. 다음줄에 넘기는 경우도 존재
 #### 3. `flex-wrap: wrap-reverse`
   ![flex-wrap: wrap-reverse](https://user-images.githubusercontent.com/85475577/147570313-b74076ab-641a-487d-b34b-280a847dd74c.png)
+  
+<br/>
+
+### flex-flow
+![flex-wrap과 flex-direction](https://user-images.githubusercontent.com/85475577/147574482-7b792499-afd4-446a-9a4f-28de48b06d9b.png)       
+- flex-direction과 flex-wrap는 자주 같이 쓰임. 이를 위한 지름길 `flex-flow: flex-direction flex-wrap`;     
+![flex-flow](https://user-images.githubusercontent.com/85475577/147574659-9dea08cc-93d9-4bc8-a0b7-d5911d40da0d.png)     
 
 <br/>
 
@@ -108,6 +115,8 @@
 ![align-content](https://user-images.githubusercontent.com/85475577/147570615-5156a5d6-ffc7-4875-a69e-568d055f6792.png)
 - align-content를 사용해서 저 사이의 공간을 수정할 수 있다.
 - cross axis에 있는 'line(빈공간)'을 컨트롤 할 수 있다.
+- align-content는 **여러 줄들 사이의 간격**을 지정하며, align-items는 컨테이너 안에서 어떻게 모든 요소들이 정렬하는지를 지정
+- 한 줄만 있는 경우, align-content는 효과를 보이지 않음
 
 <br/>
 
