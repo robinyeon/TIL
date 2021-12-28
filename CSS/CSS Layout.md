@@ -104,10 +104,10 @@
   
 <br/>
 
-### flex-flow
-![flex-wrap과 flex-direction](https://user-images.githubusercontent.com/85475577/147574482-7b792499-afd4-446a-9a4f-28de48b06d9b.png)       
-- flex-direction과 flex-wrap는 자주 같이 쓰임. 이를 위한 지름길 `flex-flow: flex-direction flex-wrap`;     
-![flex-flow](https://user-images.githubusercontent.com/85475577/147574659-9dea08cc-93d9-4bc8-a0b7-d5911d40da0d.png)     
+### flex-flow      
+- flex-direction과 flex-wrap는 자주 같이 쓰임. 이를 위한 지름길 `flex-flow: flex-direction flex-wrap;`          
+![flex-flow](https://user-images.githubusercontent.com/85475577/147574659-9dea08cc-93d9-4bc8-a0b7-d5911d40da0d.png)       
+![flex-wrap과 flex-direction](https://user-images.githubusercontent.com/85475577/147574482-7b792499-afd4-446a-9a4f-28de48b06d9b.png)     
 
 <br/>
 
@@ -121,6 +121,16 @@
 <br/>
 
 ## grid
+- 격자무늬(grid)를 만들기 힘든 flexbox에서 일어나는 문제를 해결하기 위해 등장      
+  - flexbox 문제점 예시      
+    ![flexbox의 문제점_예시](https://user-images.githubusercontent.com/85475577/147576422-f5114acd-65c9-4c95-9ef4-14a0a0edee37.png) 
+    
+- most of the time, you're gonna talk with father element.
+
+
+
+
+
 
 
 
