@@ -126,7 +126,19 @@
     ![flexbox의 문제점_예시](https://user-images.githubusercontent.com/85475577/147576422-f5114acd-65c9-4c95-9ef4-14a0a0edee37.png) 
     
 - most of the time, you're gonna talk with father element.
+```
+.father {
+  display: grid;
+```
 
+
+###
+`grid-template-columns: 250px 250px 250px;`
+`grid-template-rows: 100px 50px 300px 100px;`
+
+### `gap`
+- column-gap
+- row-gap
 
 
 
