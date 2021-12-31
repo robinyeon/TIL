@@ -120,37 +120,132 @@
 
 <br/>
 
+<hr/>
+
+***WIP***
+
 ## grid
 - 격자무늬(grid)를 만들기 힘든 flexbox에서 일어나는 문제를 해결하기 위해 등장      
   - flexbox 문제점 예시      
     ![flexbox의 문제점_예시](https://user-images.githubusercontent.com/85475577/147576422-f5114acd-65c9-4c95-9ef4-14a0a0edee37.png) 
-    
-- most of the time, you're gonna talk with father element.
+
+- grid 역시 대부분 '부모'에게 적용시킨다.
 ```
 .father {
   display: grid;
+}
 ```
 
-
-###
-`grid-template-columns: 250px 250px 250px;`
-`grid-template-rows: 100px 50px 300px 100px;`
-
-### `gap`
-- column-gap
-- row-gap
-
+### columns & rows 
+- e.g. `grid-template-columns: 10px 20px 30px;`
+  - column 3개를 만들건데, 첫번째 column의 너비는 10px, 두번째는 20px, 세번째는 30px
+- e.g. `grid-template-rows: 100px 200px 300px;`
+  -  row 3개를 만들건데, 첫번째 row 높이는 10px, 두번째는 20px, 세번째는 30px
+- auto 통해서 화면 꽉 채울 수 있음
+  - e.g. `grid-template-columns: auto 200px;`
 
 
+### gap
+- `column-gap`: column들 사이의 공간 크기
+- `row-gap`: row들 사이의 공간 크기
+- `gap`: column과 row에 공통적으로 적용할 공간 크기
 
 
+### repeat
+- e.g. `grid-template-columns: 200px 200px 200px 200px;`
+  - === `grid-template-columns: repeat(4, 200px)`
+-  e.g. `grid-template-rows: 100px repeat(2, 300px) 100px;` 이렇게도 활용 가능
 
 
+### grid-template-areas
+- allows visually design your layout
+```
+  grid-template-areas: 
+    "header header header header"
+    "content content content nav"
+    "content content content nav"
+    "footer footer footer footer";
+```
+  <img width="402" alt="스크린샷 2021-12-31 오후 9 10 30" src="https://user-images.githubusercontent.com/85475577/147822666-1e607f54-1bf2-459b-abeb-9461baa5ea38.png">
+
+- 이름 적는 대신 `.` 적어 넣으면 해당 영역은 비워진다.
+  <img width="398" alt="스크린샷 2021-12-31 오후 9 14 09" src="https://user-images.githubusercontent.com/85475577/147822795-bd18d418-eee4-4ea3-880c-9426e26f4adc.png">
 
 
+#### gride-area
+각각(header, content 등)이 무엇을 지칭하는지는 class를 통해서가 아닌 지정된 `grid-area`로 판별한다.
+```
+.header {
+  grid-area: header;
+}
+```
 
+### start & end
+[grid-template-areas와 비슷한 기능을 하는 속성, 자식 grid에 명시한다.]
+1)grid-column-start
+2)grid-column-end
+3)grid-row-start
+4)grid-row-end
+해당 속성은 정수인 숫자가 들어가며, 1부터 column(row)의 최대갯수 + 1까지 사용 가능하다.
+범위를 초과하게 되면 css가 망가져서 생각한 대로 동작하지 않게 되니 꼭 명심하자.. 참고로 상대단위(%, auto)등은 안 먹히는 듯 하다.
 
+이렇게 start, end를 하나하나 다 명시해서 쓰는건 귀찮기도 하기 때문에 다음 강의에 이를 해결하기위한 방법인 shortCuts이 나온다.
 
+#### Shortcuts
+- grid-column: (start) / (end);
+- grid-row: (start) / (end);
+`grid-column: 1 / 4;`
+
+- -1, -2, -3, ··· ▷ 끝에서부터 line 세기
+`grid-column: 1 / -2;`
+
+- (start) / span (cell 수) ▷ 시작점과 끝점을 적는걸 대신한다.
+`grid-row: 2 / span 2;`
+예시 4개의 기둥 있고 한줄로 다 먹을 때 `grid-column: span 4;`
+
+### Line Naming
+선 너비 선 너비 ... 너비 선
+`grid-template-columns: [first-line] 100px [second-line] 100px [third-line] 100px [fourth-line] 100px [fifth-line];`
+```
+.grid {
+  display: grid;
+  grid-template-columns: [first-line] 100px [second-line] 100px [third-line] 100px [fourth-line] 100px [fifth-line];
+  grid-template-rows: repeat(4, [sexy-line] 100px);
+  gap: 10px;
+}
+```
+- grid-template-areas, grid-column(row), span, line-naming 상황맞춰 골라쓰면 되는겨
+
+### fr
+fr은 전역으로 결정되는 것이 아닌 grid container에서 결정된다(여기서는 .grid)
+따라서 fr을 쓰기 위해서는 grid container에 height을 명시해야 한다.
+
+fr-fraction(부분)
+fraction은 grid에서 사용 가능한 공간을 뜻한다.
+이는 더이상 px등의 절대단위를 사용하지 않게끔 해주는 좋은 단위이다.
+fr값 비율로 공간을 나눈다.
+
+항상 block은 width와 height 주어져 있지 않은 경우에는 width는 가능한 한 최댓값, height은 0이다.
+=> fr을 쓰려면 grid container에 height만 써도 동작하지만, width만 쓰면 동작하지 않는 이유가 이것이다.
+
+● grid-template:
+"(이름)" (row크기)
+"(이름)" (row크기)
+"(이름)" (row크기)/ (각 column의 크기);
+
+grid-templete 에서는 repeat이 적용되지 않는다.
+```
+.grid {
+  height: 50vh;
+  display: grid;
+  gap: 10px;
+  grid-template:
+    "header header header header" 1fr
+    "content content content nav" 2fr
+    "footer footer footer footer" 1fr /
+    1fr 1fr 1fr 1fr;
+}
+```
 
 
 
