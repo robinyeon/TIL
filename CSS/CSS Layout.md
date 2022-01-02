@@ -247,7 +247,15 @@ grid-templete 에서는 repeat이 적용되지 않는다.
 }
 ```
 
+### Place-items
+● justify-items 수평 (flexbox의 justify-contents와 동일)      
+● align-items 수직 (flexbox의 align-items와 동일)     
+● place-items: (수직) (수평); // shortcut 동시에 2개 다 할 수 있다.      
 
+▷ stretch : grid를 늘려서 grid를 채우게 한다. (default) // 대부분 stretch 사용          
+▷ start : item을 cell 시작에 배치한다. (flexbox의 flex-start와 동일)    
+▷ center : item을 cell 중앙에 배치한다. (flexbox의 center와 동일)     
+▷ end : item을 cell 끝에 배치한다. (flexbox의 flex-end와 동일)     
 
 
 
