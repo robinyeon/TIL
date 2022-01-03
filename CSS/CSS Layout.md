@@ -120,7 +120,7 @@
 
 <hr/>
 
-## grid
+## [grid](https://cssgridgarden.com/#ko)
 - 격자무늬(grid)를 만들기 힘든 flexbox에서 일어나는 문제를 해결하기 위해 등장      
   - flexbox 문제점 예시      
     ![flexbox의 문제점_예시](https://user-images.githubusercontent.com/85475577/147576422-f5114acd-65c9-4c95-9ef4-14a0a0edee37.png) 
