@@ -79,7 +79,7 @@ h1.addEventListener("click", handleTitleClick);
   - `h1.classList.remove("className")`    
   - `h1.classList.add("className")`   
 
-```
+```javascript
 const h1 = document.querySelector("div.hello:first-child hi");
 
 function handleTitleClick() {
