@@ -132,6 +132,8 @@
 }
 ```
 
+<br/>
+
 ### columns & rows 
 - e.g. `grid-template-columns: 10px 20px 30px;`
   - column 3개를 만들건데, 첫번째 column의 너비는 10px, 두번째는 20px, 세번째는 30px
@@ -140,18 +142,21 @@
 - **auto** 통해서 화면 꽉 채울 수 있음
   - e.g. `grid-template-columns: auto 200px;`: 가장 끝의 column만 너비 200px이고 나머지 앞쪽의 너비는 auto.
 
+<br/>
 
 ### gap
 - `column-gap`: column들 사이의 공간 크기
 - `row-gap`: row들 사이의 공간 크기
 - `gap`: column과 row에 공통적으로 적용할 공간 크기
 
+<br/>
 
 ### repeat
 - e.g. `grid-template-columns: 200px 200px 200px 200px;`
   - === `grid-template-columns: repeat(4, 200px)`
 -  e.g. `grid-template-rows: 100px repeat(2, 300px) 100px;` 이렇게도 활용 가능
 
+<br/>
 
 ### grid-template-areas
 - allows **visually** design layout
@@ -179,6 +184,7 @@
 - grid-area은 /(슬래쉬)로 구분지어 grid-row-start, grid-column-start, grid-row-end, grid-column-end순으로 입력
   - e.g. `grid-area: 1 / 1 / 3 / 6;`
 
+<br/>
 
 ### start & end
 - child에 부여한다.
@@ -199,6 +205,7 @@
   - e.g. 4개의 기둥 있고 한줄로 다 먹을 때 `grid-column: span 4;`
   - `grid-row: (start) / span (cell 수)` : start로부터 지정한 span의 너비만큼 차지한다. e.g. `grid-row: 2 / span 2;`
 
+<br/>
 
 ### Line Naming
 - 각각의 선에 이름 부여 가능
@@ -214,12 +221,16 @@
 ```
 - grid-template-areas, grid-column(row), span, line-naming 필요에 따라 골라 쓰면 됨
 
+<br/>
+
 ### fr
 - fr(fraction): fraction은 grid에서 사용 가능한 공간을 뜻한다.
 - 더 이상 px 등의 절대단위를 사용하지 않게끔 해주는 좋은 단위
 - **비율**로 공간을 나눈다.
 - fr은 전역으로 결정되는 것이 아닌 grid container에서 결정된다. **따라서 fr을 쓰기 위해서는 grid container에 height을 명시해야 한다**.
   - block은 width와 height 주어져 있지 않은 경우, 항상 width는 가능한 한 최댓값, height은 0이다.
+
+<br/>
 
 ### grid-template:
 ```
@@ -241,78 +252,79 @@
 ```
 - grid-templete 에서는 repeat이 적용되지 않는다.
 
+<br/>
+
 ### Place-items
-- `items`는 각각의 아이템들(child)에 공통으로 
+- `items`는 **각각의 아이템들(child)에 공통**으로 적용할때 사용한다
+  - justify-items 수평 (flexbox의 justify-contents와 동일)      
+  - align-items 수직 (flexbox의 align-items와 동일)     
+  - place-items: (수직) (수평); // shortcut 동시에 2개 다 지정가능
+- stretch : grid를 늘려서 grid를 채우게 한다. (default) // 대부분 stretch 사용          
+- start : item을 cell 시작에 배치한다. (flexbox의 flex-start와 동일)    
+- center : item을 cell 중앙에 배치한다. (flexbox의 center와 동일)     
+- end : item을 cell 끝에 배치한다. (flexbox의 flex-end와 동일)     
 
-- justify-items 수평 (flexbox의 justify-contents와 동일)      
-- align-items 수직 (flexbox의 align-items와 동일)     
-- place-items: (수직) (수평); // shortcut 동시에 2개 다 할 수 있다.      
-
-▷ stretch : grid를 늘려서 grid를 채우게 한다. (default) // 대부분 stretch 사용          
-▷ start : item을 cell 시작에 배치한다. (flexbox의 flex-start와 동일)    
-▷ center : item을 cell 중앙에 배치한다. (flexbox의 center와 동일)     
-▷ end : item을 cell 끝에 배치한다. (flexbox의 flex-end와 동일)     
+<br/>
 
 ### Place-content
-- Justify-content : start; /*(그리드가 놓이는 위치를 뜻하며 기본은 start)*/
-- Align-content는 수직적으로 그리드를 움직이는 것
-- Start, end, space-evenly, space-around, space-between 사용
+- `content`는 **전체 그리드 박스**를 위치시키는데에 사용된다.
+  - justify-content: 수평으로 그리드가 놓이는 위치
+  - align-content: 수직으로 그리드를 움직이는 것
+  - place-content: place items와 마찬가지로 place-content를 통해 수직 수평으로 그리드 이동가능
 - 컨테이너의 height가 그리드를 담을 만큼 충분해야한다.(높이 지정)
-- Grid-template에서 높이를 fr로 설정하고 align-content를 stretch로 설정하면 쭉 늘어난다.
-- Place items와 마찬가지로 place-content를 통해 수직 수평으로 그리드 이동가능(첫번째가 수직, 두번째 옵션이 수평)
-- Place-items는 셀안에서 항목이 이동하는 것이며, place-content는 그리드가 이동하는 것이다.
+- **place-items는 각각의 child셀안에서 항목이 이동하는 것이며, place-content는 그리드가 이동하는 것**
 
+<br/>
 
-예상한 column, row보다 더 많은 데이터를 가져오게 되는경우
-e.g.
+### Place-self
+- child에게 직접 명시하여 부여한다.
+- **하나의 child에만** 적용돠는 property
+  - justify-self
+  - align-self
+  - place-self
+
+<br/>
+
+### Auto columns and rows
+- 예상한 column, row보다 더 많은 데이터를 가져오게 되는경우
+e.g.      
 ```
 grid-template-columns: repeat(4, 100px);
 grid-template-rows: repeat(4, 100px);
-```
-![스크린샷 2022-01-03 오전 10 50 41](https://user-images.githubusercontent.com/85475577/147895007-051d601e-ccbe-413f-b949-30c6b0d2a85f.png)
+```     
+![auto-rows auto-columns가 필요한 경우](https://user-images.githubusercontent.com/85475577/147895007-051d601e-ccbe-413f-b949-30c6b0d2a85f.png)      
 
-### self
-● align-self
-● justify-self
-● place-self: (수직) (수평);
-▷ **child에만** 적용돠는 property이다.
+- `grid-auto-rows: (원하는 row의 높이);`: 만들어놓은 row보다 더 많은 content가 있으면, 자동으로 row를 만들어라.
+- `grid-auto-flow: (방향);`
+  - default는 row
+  - flex-direction과 비슷
+  - row가 끝날 때 새로운 row를 만들지, 새로운 column을 만들지 결정
+- `grid-auto-columns: (원하는 column의 너비);`: `grid-auto-flow: column;`일때 작동한다.
 
-### Auto columns and rows
-● grid-auto-rows: (크기);
-▷ 만들어놓은 row보다 더 많은 content가 있으면, 자동으로 row를 만들어라.
-
-● grid-auto-flow: (방향); [기본값: row]
-▷ flex-direction과 비슷하다.
-▷ row가 끝날 때 새로운 row를 만들지, 새로운 column을 만들지 결정한다.
-
-● grid-auto-columns: (크기);
-▷ grid-auto-flow: column;일때 작동한다.
+<br/>
 
 ### minmax
-- Grid-template-columns: repeat(10, minmax(100px, 1fr)); //최대 1fr로 하되 최소 100px너비
+- column과 row의 최소최대값을 지정할 수 있다.
+  - e.g. `grid-template-columns: repeat(10, minmax(100px, 1fr));`: 최대 1fr로 하되 최소 100px너비
+
+<br/>
 
 ### auto-fill & auto-fit
 -반응형 디자인의 기본
-- Grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); //창 너비가 늘어나면 빈 column들로 row를 채움
-- Grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); // 창 너비가 늘어나면 element를 늘려서 row에 맞게 해줌
+- `grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));` //창 너비가 늘어나면 빈 column들로 row를 채움     
+  ![auto-fill](https://user-images.githubusercontent.com/85475577/147896111-591f94bf-03f5-4f70-a8d8-62d1bd4dc704.png)   
+  - 보다 **정확한** 사이즈를 위해서   
+- `grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));` // 창 너비가 늘어나면 element를 늘려서 row에 맞게 해줌      
+  ![auto-fit](https://user-images.githubusercontent.com/85475577/147896119-06c3a8af-5834-4fd9-ac8f-6ec49e77fa0e.png)      
+  - 보다 **유연한** 사이즈를 위해서     
 
-![auto-fill](https://user-images.githubusercontent.com/85475577/147896111-591f94bf-03f5-4f70-a8d8-62d1bd4dc704.png)
-- 보다 정확한 사이즈를 위해서
-
-![auto-fit](https://user-images.githubusercontent.com/85475577/147896119-06c3a8af-5834-4fd9-ac8f-6ec49e77fa0e.png)
-- 보다 유연한 사이즈를 위해서
-
+<br/>
 
 ### min-content & max-content
-- 더 이상 사이즈가 아닌 내부에 담긴 '콘텐츠'에 보다 신경 쓸 수 있음
-![스크린샷 2022-01-03 오전 11 40 05](https://user-images.githubusercontent.com/85475577/147896379-56579cdb-525c-4532-88de-19bc9a986912.png)
-- 글자가 깨지거나 튀어나오는 것 없이 
+- 더 이상 사이즈가 아닌 **내부에 담긴 '콘텐츠'** 에 신경 쓸 수 있음     
+  ![max-content min-content example](https://user-images.githubusercontent.com/85475577/147896379-56579cdb-525c-4532-88de-19bc9a986912.png)
+- min-content: 글자가 깨지거나 튀어나오는 것 없이 너비를 최소한으로 줄여줌
+- max-content: 글자가 깨지거나 튀어나오는 것 없이 콘텐츠의 최대 너비에 맞춰줌
 - 반응형의 기본. 자주 섞여 쓰임
   - e.g. `grid-template-columns: repeat(5, minmax(max-content, 1fr));`
   - e.g. `grid-template-columns: repeat(auto-fit, minmax(20px, max-content));`
-
-### [Grid Garden](https://cssgridgarden.com/#ko)
-#### grid-area
-- grid-column와 grid-row 모두를 입력하는게 너무 많은경우, 다른 속성을 이용하여 줄일 수 있습니다. grid-area은 /(슬래쉬)로 구분지어 grid-row-start, grid-column-start, grid-row-end, grid-column-end순으로 입력 가능합니다.
-- e.g. `grid-area: 1 / 1 / 3 / 6;`  
-
