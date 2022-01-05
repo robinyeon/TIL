@@ -1,5 +1,3 @@
-***WIP***
-
 # Response
 - **브라우저가 request를 보내면 서버가 response 해준다**
 ```javascript
@@ -11,7 +9,6 @@ const handleHome = (req, res) => {
 - req, res의 자리 두개가 **반드시** 들어가야 한다.
 
 <br/>
-
 
 # Middleware(미들웨어)
 - **All middleware are controllers, all controllers are middlewares**.
@@ -57,9 +54,11 @@ app.get("/login", gossipMiddleware, handleLogin)
 
 ```
 
-# external middlewares
+<br/>
+
+# External Middlewares
 ## 예시1. Morgan
-- 이용 방법: `npm i morgan` 후 아래와 같이 코드를 작성한다:
+- 이용 방법(공식 홈페이지 참고): `npm i morgan`로 설치 후 아래와 같이 작성한다:
 ```javascript
 import morgan from "morgan"; 
 
@@ -70,73 +69,54 @@ app.use(logger);
 - `morgan("dev")`     
     ![morgan_middleware](https://user-images.githubusercontent.com/85475577/148062765-a567d902-a883-4a7e-a48b-71acf980ffc0.png)     
     - 위의 그림과 같이 'Method, Path, Status code, Speed' 순으로 로그해준다.
-- dev 외에도 combine, common, short, tiny가 있다.
-- 이처럼 다양한 외부 미들웨어를 가져다가 사용 할 수 있으며, 이것들 역시 `next()`를 호출 할 수 있다.
+    - dev 외에도 combine, common, short, tiny 존재.
+- 이처럼 다양한 외부 미들웨어를 가져다가 사용 할 수 있으며, 당연하게도 이것들 역시 `next()`를 호출 할 수 있다.
 
 <br/>
 
 # Routers
-Before starting a project, we need to consider "What sort of data are we going to have?"
-- videos and users
-- and these are gonna be domains
+- 우선, 프로젝트를 시작하기 전 "어떤 데이터를 다루게 될지"를 생각해보기
+    - e.g. Youtube 클론코딩에서는 '비디오'와 '유저' 데이터를 다루게 될 것
+- 바로 이 데이터들이 도메인을 짜는데에 출발점이 된다.
 
-global routers (아주 가까운 라우터들) 홈에서 바로 갈 수 있는 라우터들
+## Global Routers
+- 홈에서 바로 갈 수 있는 라우터들
+```
 / -> Home
 /join -> Join
 /login -> Login
 /search -> Search
+```
 
-users routers
+## e.g. Users Routers & Video Routers
+```
 /edit-user -> Edit user ==> /users/edit
 /delete-user -> Delete user ==> /users/delete
 
-videos routers
 /watch-video -> Watch Video ==> /videos/watch
 /edit-video -> Edit Video ==> /videos/edit
 /delete-video -> Delete Video ==> /videos/delete
-                        ==> /videos/comments
-                        ==> /videos/comments/delete 
-
-즉, 라우터는 작업중인 주제를 기반으로 url을 그룹화 해준다.
-/comment-on-video 가 아닌 /videos/comments
-컨트롤러와 url의 관리를 쉽게 해준다. 모두 개발자를 위한 미니 도구
-
-예외사항
-의문: join은 users가 하는거니까 /users/join 아닌가? -> 깔끔하지 않고, 마케팅 측면에서도 (홍보에) 불리해
-물론 논리상으로는 위의 것이 맞아. 하지만 위의 이유로 일부 예외를 두곤 함
-
-```javascript
-const globalRouter = express.Router();
-const userRouter = express.Router();
-const videoRouter = express.Router();
-
-// 라우터 활용 준비: root url: /, /users, /videos 을 사용한다
-// 누군가 /videos 로 시작하는 Url을 입력하면 videoRouter 안으로 들어가게끔하라
-app.use("/videos", videoRouter);
-app.use("/users", userRouter);
-app.use("/", globalRouter);
-
-// /, /users/edit, /videos/watch 만들기
-const handleHome = (req, res) => res.send("Home")
-
-const handleEditUser = (req, res) => res.send("Edit User")
-
-const handleWatchVideo = (req, res) => res.send("Watch video")
-
-// router.get() 사용하기
-globalRouter.get("/", handleHome);
-
-userRouter.get("/edit", handleEditUser);
-
-videoRouter.get("/watch", handleWatchVideo);
 ```
 
+- 즉, 라우터는 작업중인 주제를 기반으로 url을 그룹화 해준다.
+- 또한 컨트롤러와 url의 관리를 쉽게 해주는 (개발자를 위한) 미니앱이라고 할 수 있다.
 
-clean code -> divide and conquer
-- 우선 작동되게 완료한 이후에 클린코드로 작성한다
+## 예외사항
+- 이러한 의문점이 생길 수도 있다: 'join은 users의 행위이니 /users/join으로 설계해야하는게 아닌가?'
+- 논리상으로는 옳을 수 있으나,
+    1. 깔끔하지 않다
+    2. 마케팅 측면에서도 (길다보니) 홍보에 불리한 점 등
+    위와 같은 이유로 일부 예외를 두곤 한다.
 
-**NodeJS concept: every file is a module**
-- import, export
+## 사용방법 e.g. `/videos/watch` 생성
+```javascript
+const videoRouter = express.Router(); // 라우터 생성
+
+app.use("/videos", videoRouter); // root url(/video)을 활용하여 '누군가 /videos 로 시작하는 url을 입력하면 videoRouter 안으로 들어가게끔하라' 입력
+
+const handleWatchVideo = (req, res) => res.send("Watch video")
+videoRouter.get("/watch", handleWatchVideo); // 이미 videoRouter안으로 들어와있는 상태이기 때문에 /videos/watch로 적지 않는다.
+```
 
 
 
