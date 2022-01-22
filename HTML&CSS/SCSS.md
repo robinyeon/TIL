@@ -1,3 +1,5 @@
+*From [CSS Layout by nomadcoders](https://nomadcoders.co/css-layout-masterclass)*
+
 # SCSS
 - 기본적으로 css preprocessor: compile돼서 normal css 코드가 되는 것.
 - css를 programming language처럼 만들어주는 등, css 사용을 편리하게 해줌 e.g. 콘솔을 통해 에러 알림
