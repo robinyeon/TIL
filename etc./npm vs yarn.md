@@ -17,4 +17,4 @@
 
 ### Security
 - npm: Automatically executes a code which allows the other packages to get included into the fly, thus resulting in several vulnerabilities in the security system. 
-- yarn: Installs those files which are only from the yarn.lock or package.json files. Therefore it is considered more secured than npm packages.
+- yarn: Installs those files which are only from the `yarn.lock` or `package.json` files. Therefore it is considered more secured than npm packages.
