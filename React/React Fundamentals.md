@@ -1,3 +1,7 @@
+*From [React Fundamentals by nomadcoders](https://nomadcoders.co/react-for-beginners)*
+
+<br/>
+
 ## 왜 ReactJS를 사용하는가?
 1. There's many big websites behind ReactJS.
   - 단순히 '큰 회사들이 사용하기 때문'이 아닌, 그들이 리액트를 택한 후 보이는 행보들이(e.g. 적극투자) 더욱 리액트의 입지를 견고히 하고 있음.
