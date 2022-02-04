@@ -1,5 +1,3 @@
-WIP
-
 Inline: button, span, img
 
 React.createElement(
@@ -54,6 +52,9 @@ Html
 <option value=“0”>
 
 
+컴포넌트는 단지 JSX를 반환하는 함수
+
+
 Props: parents component -> child component
 property역시 내 임의로 작명하여 보내줄 수 있다.
 const Btn = ({ banana }) => {
@@ -80,5 +81,37 @@ const App = () => {
 
 
 const MemorizedBtn = React.memo(Btn)
--> Btn의 같은버전 인데, props 바뀌지 않으면 굳이 re-render하지않기
+-> Btn의 같은버전 인데, props 바뀌지 않으면 굳이 re-render하지마!
 
+
+(이름이야 같을지도 모르지만)
+Html에 넣을때는 onClick
+Custom component에 onClick 넣을때는 그저 props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
