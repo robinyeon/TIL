@@ -1,3 +1,7 @@
+![IMG_DC6D46CFDE1D-1](https://user-images.githubusercontent.com/85475577/152683363-58c77f6b-382b-40d2-b42b-ca5ec3f65350.jpeg)
+![IMG_5A5FF5638714-1](https://user-images.githubusercontent.com/85475577/152683450-4d35e6c3-f34c-4176-b22f-55d3dd8a0053.jpeg)
+
+
 ## [animation-delay](https://velog.io/@1703979/TIL-06)
 - 애니메이션을 순차적으로 작동시킬 수 있다.
 - 다만, infinite 적용시 한 사이클이 끝나면 다음 사이클에서는 delay가 적용되지 않는 현상을 확인했다.
