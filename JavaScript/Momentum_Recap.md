@@ -1,3 +1,5 @@
+*From [Momentum by nomadcoders](https://nomadcoders.co/javascript-for-beginners)*
+
 ## Form submission
 - input의 유효성 검사를 작동하기 위해선 **form안에 존재**해야만 한다. e.g. `required`, `maxlength`
 - input안에 있는 button을 누르거나, type이 submit인 input을 클릭하면 내가 작성한 form이 submit 된다.
