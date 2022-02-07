@@ -284,7 +284,7 @@ const plus = (a:number, b:number) => a + b;
 
 <br/>
 
-## DefinitelyTyped
+## [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped)
 - 기존의 라이브러리나 패키지들은 처음부터 TS을 타겟팅하여 만들어진게 만들어진게 아니다. e.g. styled-components
 - 이에 새롭게 라이브러리를 서치해주어야 한다. e.g. `npm i --save-dev @types/styled-components`
 ### `@types`(type definition)는 무엇인가?
@@ -292,8 +292,9 @@ const plus = (a:number, b:number) => a + b;
 - TS용 설명이 적혀있다.
 - e.g. TS에게 styled-components가 뭔지 설명함으로써 TS에서도 styled-components를 사용할 수 있게끔 해준다.
 
-#### `Module not found: Error: Can't resolve 'styled-components'`에러
+#### 🚫`Module not found: Error: Can't resolve 'styled-components' in ...`
 - 기존의 `npm install styled-components`가 설치된 상태에서 `npm i --save-dev @types/styled-components`설치가 동반되어야 에러가 해결되더라.
+- 왜냐하면 `@types`는 TS에게 styled-components가 무엇인지 설명해주는 아이이기 때문에 설명이 될 본체가 일단 존재해야지!
 
 <br/> 
 
@@ -325,6 +326,197 @@ const Circle = ({ bgColor }: CircleProps) => {
 };
 ```
 
+<br/>
+
+## Default & Optional Props
+### 1. Prop값이 무조건 required가 아닌 optional일수도 있게 만드는 법
+```typescript
+interface CircleProps {
+  bgColor: string;
+  borderColor?: string;
+}
+```
+- 위의 코드 예시 속 `borderColor?: string;`처럼, `?`을 통해 prop값을 `string`또는 `undefined`로 줄 수 있다. (=== `borderColor: string || undefined`
+
+### 2. 값이 내려오지 않았을 때 Default값을 부여하는 방법
+```typescript
+interface CircleProps {
+  bgColor: string;
+  borderColor?: string;
+  text?: string;
+}
+
+const Circle = ({
+  bgColor,
+  borderColor,
+  text = "I'm a default text!",
+}: CircleProps) => {
+  return (
+    <Container bgColor={bgColor} borderColor={borderColor ?? bgColor}>
+      {text}
+    </Container>
+  );
+};
+```
+2-1. TS문법 `borderColor={borderColor ?? bgColor}`
+- borderColor가 있으면 물려받은 borderColor를 사용하고,
+- borderColor가 없으면 디폴트값으로 bgColor를 사용한다.
+- 아니면 e.g. `borderColor={borderColor ?? "white"}`와 같이 직접 적는 것도 가능하다.
+
+2-2. JS문법 `text = "I'm a default text!"`
+- props를 내려받으며 디폴트값 적기
+
+<br/>
+
+## State
+- TS는 똑똑해서 디폴트값으로 어떤 타입을 쓸지 미리 예측한다. e.g. 아래 코드 예시 속 `useState(0)` 디폴트 값이 `0` number로 주어졌기 때문에 예측 가능하다.
+-  useState의 value값이 string 또는 number 타입이 되길 원한다면 `useState<string | number>(0)`와 같이 작성 가능하지만, 보통 기존의 타입을 그대로 쓰는 경우가 많아 그렇게 자주 쓰이지는 않는다.
+```typescript
+const Circle = ({
+  bgColor,
+  borderColor,
+  text = "I'm a default text!",
+}: CircleProps) => {
+  const [value, setValue] = useState<string | number>(0);
+  setValue(0);   //✅
+  setValue("hello");   //✅
+  setValue(true);   //❌
+
+  return (
+    <Container bgColor={bgColor} borderColor={borderColor ?? bgColor}>
+      {text}
+    </Container>
+  );
+};
+```
+
+<br/>
+
+## Forms, Events
+<img width="441" alt="스크린샷 2022-02-07 오후 5 15 05" src="https://user-images.githubusercontent.com/85475577/152749867-e1661a77-39b5-40f3-9587-fb5eb26c5ba8.png">
+- `any`는 아무 타입이나 될 수 있다는 의미지만, 이는 TS를 사용하는 의미가 없어지니 최대한 **지양**하도록 한다. 
+```typescript
+function App() {
+  const [value, setValue] = useState("");
+  const onChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const {
+      currentTarget: { value },
+    } = event;
+    setValue(value);
+  };
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log("Hello", value);
+  };
+  return (
+    <div>
+      <form onSubmit={onSubmit}>
+        <input
+          onChange={onChange}
+          value={value}
+          type="text"
+          placeholder="username"
+        />
+        <button>Log In</button>
+      </form>
+    </div>
+  );
+}
+```
+- event의 보호를 받을 수 있다.
+	- `event: React.FormEvent<HTMLInputElement>`: input 태그에서 일어나는 이벤트라는 걸 알려준다.
+	- `event: React.FormEvent<HTMLFormElement>`: form 태그에서 일어나는 이벤트라는 걸 알려준다.
+	- 이와 같은 방식은 **React.js에서만** 정답일수 있다. 다른 라이브러리에서는 다른 방식을 찾아야 할 수도 있다.
+	- React.js에서 사용되는 event는 [여기](https://reactjs.org/docs/events.html)서 확인해볼 수 있다.
+- `target`이 아닌 `currentTarget`인 점 주의하기.
+- **TypeScript는 구글링과 document 참고가 답이다.**
+
+<br/>
+
+## TS에서 Theme 적용하기(다크모드, 라이트모드)
+- [TypeScript와 styled-components 함께 사용하기](https://styled-components.com/docs/api#typescript)
+
+### 1. Declaration File(`styled.d.ts`)
+> Declaration files, if you're not familiar, are just files that describe the shape of an existing JavaScript codebase to TypeScript. By using declaration files (also called . ... ts files), you can avoid misusing libraries and get things like completions in your editor.
+```typescript
+import "styled-components";
+
+declare module "styled-components" {
+  export interface DefaultTheme {
+    textColor: string;
+    bgColor: string;
+    btnColor: string;
+  }
+}
+```
+- 내 styled-components의 테마를 **정의**할 수 있다.
+
+### 2. `theme.ts`
+- `styled.d.ts` 이 정의 파일 속 속성들과 똑같아야 한다.
+```typescript
+import { DefaultTheme } from "styled-components";
+
+export const lightTheme: DefaultTheme = {
+  bgColor: "white",
+  textColor: "black",
+  btnColor: "tomato",
+};
+
+export const darkTheme: DefaultTheme = {
+  bgColor: "black",
+  textColor: "white",
+  btnColor: "teal",
+};
+```
+- 속성들이 자동완성되어서 실수를 방지할 수 있다.
+
+### 3. `index.tsx`
+- `<ThemeProvider>`를 통해 theme을 지정해줄수 있다.
+```typescript
+import React from "react";
+import ReactDOM from "react-dom";
+import { ThemeProvider } from "styled-components";
+import App from "./App";
+import { darkTheme, lightTheme } from "./theme";
+
+ReactDOM.render(
+  <React.StrictMode>
+    <ThemeProvider theme={darkTheme}>
+      <App />
+    </ThemeProvider>
+  </React.StrictMode>,
+  document.getElementById("root")
+);
+```
+- `<ThemeProvider>` 내부에 존재하는 모든 컴포넌트들은 theme object에 접근할 수 있게 된다.
+
+
+### 4. `App.tsx`
+-  각 styled-components에서 theme을 가져다 쓸 수 있다.
+```typescript
+import React, { useState } from "react";
+import styled, { keyframes } from "styled-components";
+
+const Container = styled.div`
+  background-color: ${(props) => props.theme.bgColor};
+`;
+
+const H1 = styled.h1`
+  color: ${(props) => props.theme.textColor};
+`;
+
+function App() {
+  return (
+    <div>
+      <Container>
+        <H1>PROTECTED</H1>
+      </Container>
+    </div>
+  );
+}
+
+export default App;
+```
 
 
 
