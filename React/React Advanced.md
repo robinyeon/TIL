@@ -7,7 +7,7 @@
 	- JavaScript 코드를 적어야한다는 점
 	- hover 등을 적용하지 못한다는 점
 3. Moduler CSS
-	- className들을 계속해서 복붙해줘야는 귀찮음
+	- className들을 계속해서 복붙해줘야한다는 귀찮음
 
 - styled-components는 이 모든것을 웃도는 스타일 적용 방법이다.
 - React.js 스타일 적용에 최적화 되어있다.
@@ -274,7 +274,7 @@ const plus = (a:number, b:number) => a + b;
 
 ## 설치
 1. Create React App을 타입스크립트로 시작하는 방법
-`npx create-react-app my-app —template typescript`
+`npx create-react-app my-app --template typescript`
 
 2. 기존 Create React App으로 만든 프로젝트에 타입스크립트 설치하는 방법
 `npm install --save typescript @types/node @types/react @types/react-dom @types/jest`
@@ -299,7 +299,7 @@ const plus = (a:number, b:number) => a + b;
 <br/> 
 
 ## How to Type
-- "Component에 type를 추가한다"의 의미는 "TS 설명한다"는 뜻이다.
+- "Component에 type를 추가한다"의 의미는 "TS에게 설명한다"는 뜻이다.
 
 ### Interface
 - “Props를 넘겨줄때, 혹은 styled-components에 넘겨줄때 interface 해준다”: **Interface는 object의 모양을 설명해준다.**
@@ -336,7 +336,7 @@ interface CircleProps {
   borderColor?: string;
 }
 ```
-- 위의 코드 예시 속 `borderColor?: string;`처럼, `?`을 통해 prop값을 `string`또는 `undefined`로 줄 수 있다. (=== `borderColor: string || undefined`
+- 위의 코드 예시 속 `borderColor?: string;`처럼, `?`을 통해 prop값을 `string`또는 `undefined`로 줄 수 있다. (=== `borderColor: string | undefined`
 
 ### 2. 값이 내려오지 않았을 때 Default값을 부여하는 방법
 ```typescript
@@ -393,7 +393,8 @@ const Circle = ({
 <br/>
 
 ## Forms, Events
-<img width="441" alt="스크린샷 2022-02-07 오후 5 15 05" src="https://user-images.githubusercontent.com/85475577/152749867-e1661a77-39b5-40f3-9587-fb5eb26c5ba8.png">
+<img width="441" alt="스크린샷 2022-02-07 오후 5 15 05" src="https://user-images.githubusercontent.com/85475577/152749867-e1661a77-39b5-40f3-9587-fb5eb26c5ba8.png"/>
+
 - `any`는 아무 타입이나 될 수 있다는 의미지만, 이는 TS를 사용하는 의미가 없어지니 최대한 **지양**하도록 한다. 
 ```typescript
 function App() {
