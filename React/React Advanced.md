@@ -1,3 +1,5 @@
+***WIP***
+
 *From [ReactJS Masterclass by nomadcoders](https://nomadcoders.co/react-masterclass)*
 
 ## 다양한 CSS 적용방법과 단점
@@ -519,11 +521,95 @@ function App() {
 export default App;
 ```
 
+<hr/>
 
+## React Hook Form
+- 광범위한 Form을 관리하거나 유효성 검사를 진행할때 시간을 절약 할 수 있다.
+- Recoil_prac 레포 내의 [TodoList.tsx](https://github.com/robinyeon/Recoil-prac/commit/3c6a35ab595d91e983f3cd72b02b55f657d5c386?diff=split) 참고
 
+1. `register`
+	- useForm hook을 사용해서 가져올 수 있으며, input에 넣어 활용한다.
+	- 가장 많이 활용하게 될 함수. 거의 모든 행위를 register fn에서 진행한다.
+```tsx
+<input
+  {...register("email", {
+    required: "Email required!",
+    pattern: {
+      value: /^[A-Za-z0-9._%+-]+@naver.com$/,
+      message: "Only @naver.com emails are allowed",
+    },
+  })}
+  placeholder="Email"
+/>
+```
+	- `{...register("이름", {data가 들어가는 객체})}`
+	- React-hook-form이 알 수 있도록 input의 이름(`"email"`)을 줘야한다.
 
+2. `formState`: 에러 객체 제공
+- `formState: {errors}` form의 state가 들어있고, 그 중 에러 객체 활용
+- Validation(유효성 검사)를 커스터마이징 할 수 있다: 규칙이나 에러 메세지 설정 가능.
+- `handleSubmit` fn: useForm hook에서 제공하는 함수로, onSubmit 이벤트에 등록하여 사용한다.
+	- 하나의 인자를 받는다: `onValid` fn
+	- Form의 데이터가 유효할때(정상이고 에러가 없을 때) 실행된다.
+- `setError`: 코드에서 에러를 발생시킬 때 유용하다.
+```tsx
+const onValid = (data: IForm) => {
+    if (data.password !== data.passwordConfirm) {
+      setError(
+        "passwordConfirm",
+        { message: "Password are not the same!" },
+        { shouldFocus: true }
+      );
+    }
+    setError("extraError", { message: "Server OFFLINE!" });
+  };
+  console.log(errors);
+  return (
+    <div>
+      <form
+        style={{ display: "flex", flexDirection: "column" }}
+        onSubmit={handleSubmit(onValid)}
+      >
+	  ...
+```
 
+3. minLength와 같은 옵션 사용 가능
+- 단순히 `minLength: 5`와 같이 부여할 수도 있으나, 아래와 같이 객체를 활용하여 value와 message를 함께 줄 수 있다:
+```tsx
+ <input
+	  {...register("username", {
+		required: "Username required!",
+		minLength: {
+		  value: 5,
+		  message: "Your usename is too short!",
+		},
+	  })}
+	  placeholder="Username"
+	/>
+```
 
+4. 미리 디폴트값을 설정 할 수 있다.
+```typescript
+ const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm<IForm>({
+    defaultValues: {
+      email: "@naver.com",
+    },
+  });
+```
+
+5. `setValue`
+- value 값을 지정할 수 있다. e.g. submit 한 후 input 비우기
+```typescript
+const onValid = (data: Iform) => {
+    console.log("Add To-Do,", data.toDo);
+    setValue("toDo", "");
+  };
+```
 
 
 
