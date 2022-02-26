@@ -654,6 +654,18 @@ const onClick = (newCategory: ITodo["category"]) => {
 
 <br/>
 
+### 배열 내 제 위치에 있는 요소를 새로운 요소(값)로 대체하는 방법
+1. 타겟의 인덱스를 파악한다(어디있는지)
+2. 타겟이 오기 직전의 앞부분(front)과 뒷부분(back)으로 나눈다.
+3. finalArray = [...front, "새로운 값", ...back]
+```
+const food = ["pizza", "mango", "kimchi", "kimbab"];
+const target = 1;
+food.slice(0, target); // ["pizza"]
+food.slice(target + 1); //["kimchi", "kimbab"]
+[...food.slice(0, target), "감", ...food.slice(target + 1)];
+```
+
 ## Selectors
 - atom의 output을 변형시키는 것. atom의 state를 가져다가 원하는대로 모습을 변형시킨다. (derived state)
 
