@@ -611,6 +611,61 @@ const onValid = (data: Iform) => {
   };
 ```
 
+<br/>
+
+## Recoil
+```typescript
+const value = useRecoilValue(toDoState);
+const modFn = useSetRecoilState(toDoState);
+const [value, modFn] = useRecoilState(toDoState)
+```
+
+### 인자가 있는 onClick event를 처리하는 방법
+1. 함수형으로 인자를 받아 활용한다. 보통 이 방식을 더 자주 활용한다.
+```tsx
+<button onClick={() => onClick("DOING")}>Doing</button>
+```
+
+2. button에 name을 부여하여 event.currentTarget.name으로 불러다가 활용한다.
+```typescript
+const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+	const {
+	 currentTarget: { name },
+	} = event;
+  };
+  ...
+	<button name="DOING" onClick={onClick}>
+   		Doing
+	</button>
+```
+
+### Interface 반복없이 작성하는 방법
+```typescript
+const onClick = (newCategory: "TO_DO" | "DOING" | "DONE") => {
+	console.log("I wanna go to", newCateory);
+};
+```
+아래와 같이 반복 없는 코드를 작성할 수 있다.
+```typescript
+const onClick = (newCategory: ITodo["category"]) => {
+	console.log("I wanna go to", newCateory);
+};
+```
+
+<br/>
+
+## Selectors
+- atom의 output을 변형시키는 것. atom의 state를 가져다가 원하는대로 모습을 변형시킨다. (derived state)
+
+
+
+
+
+
+
+
+
+
 
 
 <hr/>
